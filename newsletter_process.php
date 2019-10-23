@@ -2,17 +2,12 @@
 require_once 'vendor/autoload.php';
 session_start();
 
-use App\Config;
 use App\Utils;
+use App\Data;
 
 try {
-    $dbConfig = new Config('config/db.ini');
-
-    $dsn = 'mysql:host=' . $dbConfig->host .
-            ';dbname=' . $dbConfig->dbname .
-            ';charset=' . $dbConfig->charset;
-
-    $pdo = new PDO($dsn, $dbConfig->user, $dbConfig->password);
+   $pdo = Data::getInstance();
+   $connexion = $pdo->getConnexion();
 } catch (Exception $ex) {
     // TODO: générer nouvelle notification d'erreur avant de rediriger vers la page d'accueil
     Utils::redirect('index.php');
@@ -23,7 +18,7 @@ if (empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL
     Utils::redirect('index.php');
 }
 
-$stmt = $pdo->prepare("INSERT INTO newsletter (email) VALUES (:email)");
+$stmt = $connexion->prepare("INSERT INTO newsletter (email) VALUES (:email)");
 
 $res = $stmt->execute([
     'email' => $_POST['email']
