@@ -3,10 +3,10 @@ require_once 'vendor/autoload.php';
 session_start();
 
 use App\Utils;
-use App\Data;
+use App\Db;
 
 try {
-   $pdo = Data::getInstance();
+   $pdo = Db::getInstance();
    $connexion = $pdo->getConnexion();
 } catch (Exception $ex) {
     // TODO: générer nouvelle notification d'erreur avant de rediriger vers la page d'accueil

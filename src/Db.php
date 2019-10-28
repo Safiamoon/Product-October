@@ -3,7 +3,7 @@
 namespace App;
 use App\Config;
 
-class Data
+class Db
 {
   //Instance de la classe PDO
   private $PDOInstance;
@@ -26,7 +26,7 @@ class Data
   public static function getInstance()
   {
     if (!self::$instance) {
-      self::$instance = new Data();
+      self::$instance = new Db();
     }
     return self::$instance;
   }
